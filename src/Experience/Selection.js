@@ -60,7 +60,7 @@ export default class Selection {
     if (!body) return
 
     // On garde l'angle de vue actuel et on se rapproche à une distance adaptée à la taille du corps
-    const position = body.mesh.position
+    const position = body.position
     const controls = this.camera.controls
     const offset = this.camera.instance.position.clone().sub(controls.target)
     offset.setLength(Math.max(body.radius * 8, 4))
@@ -72,7 +72,7 @@ export default class Selection {
   /** À appeler après la mise à jour des positions : la caméra suit le déplacement du corps. */
   update() {
     if (!this.selected) return
-    const position = this.selected.mesh.position
+    const position = this.selected.position
     const delta = position.clone().sub(this.previousPosition)
     this.camera.instance.position.add(delta)
     this.camera.controls.target.add(delta)

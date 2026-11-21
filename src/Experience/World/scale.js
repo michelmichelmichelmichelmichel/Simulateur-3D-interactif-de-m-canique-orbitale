@@ -76,3 +76,28 @@ export function sunRadius(scale = DEFAULT_SCALE) {
 export function planetRadius(radiusKm) {
   return 0.6 * Math.sqrt(radiusKm / 6371)
 }
+
+/**
+ * Exprime dans la scène une matrice de rotation 3 × 3 (tableau de lignes) définie dans
+ * le repère écliptique : S · R · Sᵀ, où S est la rotation (x, y, z) → (x, z, −y)
+ * utilisée par eclipticToScene. Renvoie les 9 coefficients ligne par ligne.
+ *
+ * Avec cette même rotation, l'axe z d'un repère lié à une planète (son pôle) devient
+ * l'axe y de la sphère Three.js, et son axe x (méridien origine) l'axe x de la
+ * sphère, là où se trouve le milieu des textures équirectangulaires (longitude 0°).
+ */
+export function eclipticMatrixToScene(R) {
+  const S = [
+    [1, 0, 0],
+    [0, 0, 1],
+    [0, -1, 0],
+  ]
+  const out = []
+  for (let i = 0; i < 3; i++)
+    for (let j = 0; j < 3; j++) {
+      let sum = 0
+      for (let k = 0; k < 3; k++) for (let l = 0; l < 3; l++) sum += S[i][k] * R[k][l] * S[j][l]
+      out.push(sum)
+    }
+  return out
+}

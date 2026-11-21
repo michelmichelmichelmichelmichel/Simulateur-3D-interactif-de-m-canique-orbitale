@@ -47,7 +47,11 @@ Ajouter `#debug` à l'URL pour afficher le panneau de réglages (lil-gui).
   Positions of the Major Planets*, JPL —
   https://ssd.jpl.nasa.gov/planets/approx_pos.html
 - **Positions de référence** : JPL Horizons — https://ssd.jpl.nasa.gov/horizons/
-- **Rayons des planètes** : NASA Planetary Fact Sheet —
+- **Axes et rotation des planètes** : B. A. Archinal et al., *Report of the IAU
+  Working Group on Cartographic Coordinates and Rotational Elements: 2009*,
+  Celestial Mechanics and Dynamical Astronomy 109 (2011), p. 101–135.
+- **Rayons, inclinaisons des axes et périodes de rotation (valeurs de référence
+  des tests)** : NASA Planetary Fact Sheet —
   https://nssdc.gsfc.nasa.gov/planetary/factsheet/
 - **Textures** (`public/textures/`) : [Solar System Scope](https://www.solarsystemscope.com/textures/),
   sous licence [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), non modifiées.

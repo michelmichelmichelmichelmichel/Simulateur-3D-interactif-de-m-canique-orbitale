@@ -6,7 +6,10 @@ import {
   eclipticToScene,
   sceneDistance,
   sunRadius,
+  eclipticMatrixToScene,
 } from '../src/Experience/World/scale.js'
+import { bodyToEcliptic, poleFrame, apply } from '../src/physics/rotation.js'
+import { J2000 } from '../src/physics/kepler.js'
 
 const norm = (p) => Math.hypot(p.x, p.y, p.z)
 const cosAngle = (p, q) => (p.x * q.x + p.y * q.y + p.z * q.z) / (norm(p) * norm(q))
@@ -77,5 +80,27 @@ describe('Propriétés propres à chaque mode', () => {
     expect(sceneDistance(0.3, 0, scale)).toBe(sceneDistance(0.47, 0, scale))
     const gaps = [1, 2, 3].map((i) => sceneDistance(1, i, scale) - sceneDistance(1, i - 1, scale))
     expect(new Set(gaps).size).toBe(1)
+  })
+})
+
+describe('eclipticMatrixToScene', () => {
+  // Rotation écliptique → scène utilisée par eclipticToScene : (x, y, z) → (x, z, −y)
+  const toScene = ({ x, y, z }) => ({ x, y: z, z: -y })
+
+  it('tourner puis passer dans la scène = passer dans la scène puis tourner', () => {
+    const R = bodyToEcliptic('saturn', J2000 + 4321.25)
+    const m = eclipticMatrixToScene(R)
+    const v = { x: 0.3, y: -0.8, z: 0.52 }
+    const expected = toScene(apply(R, v))
+    const s = toScene(v)
+    expect(m[0] * s.x + m[1] * s.y + m[2] * s.z).toBeCloseTo(expected.x, 12)
+    expect(m[3] * s.x + m[4] * s.y + m[5] * s.z).toBeCloseTo(expected.y, 12)
+    expect(m[6] * s.x + m[7] * s.y + m[8] * s.z).toBeCloseTo(expected.z, 12)
+  })
+
+  it('le pôle de la Terre penche de 23,44° par rapport à l’axe vertical de la scène', () => {
+    const m = eclipticMatrixToScene(poleFrame('earth', J2000))
+    // Image de l'axe y local (pôle) = deuxième colonne
+    expect((Math.acos(m[4]) * 180) / Math.PI).toBeCloseTo(23.44, 1)
   })
 })

@@ -16,6 +16,7 @@ export default class Sun {
     )
     this.mesh.userData.body = this
     this.scene.add(this.mesh)
+    this.position = this.mesh.position
 
     // Lumière émise depuis le Soleil, sans atténuation avec la distance (decay = 0)
     // pour que les planètes lointaines restent visibles.
