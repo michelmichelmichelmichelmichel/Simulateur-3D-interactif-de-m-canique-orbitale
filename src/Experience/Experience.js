@@ -7,6 +7,7 @@ import Camera from './Camera.js'
 import Renderer from './Renderer.js'
 import World from './World/World.js'
 import TimeControls from './TimeControls.js'
+import Selection from './Selection.js'
 import Hud from './Hud.js'
 
 let instance = null
@@ -34,6 +35,7 @@ export default class Experience {
     this.renderer = new Renderer()
     this.world = new World()
     this.timeControls = new TimeControls()
+    this.selection = new Selection()
     this.hud = new Hud()
 
     this.sizes.on('resize', () => this.resize())
@@ -46,9 +48,11 @@ export default class Experience {
   }
 
   update() {
+    // Ordre important : positions → suivi de caméra → contrôles → affichage
     this.clock.update(this.time.delta)
-    this.camera.update()
     this.world.update()
+    this.selection.update()
+    this.camera.update()
     this.hud.update()
     this.renderer.update()
   }
@@ -61,6 +65,7 @@ export default class Experience {
     this.renderer.destroy()
     this.debug.destroy()
     this.timeControls.destroy()
+    this.selection.destroy()
     instance = null
   }
 }
