@@ -126,3 +126,47 @@ L'échelle des distances en racine carrée est acceptée.
   caméra recadre le système à chaque changement. 130 tests au total.
 - **Vérifié par l'IA dans la page :** distances de Mercure et de Neptune, taille du
   Soleil et recul de la caméra pour chaque mode. Rendu visuel non vu par l'IA.
+
+### Extensions EF9 et EF10 — Rotation, inclinaison des axes, anneaux de Saturne
+**Demande :** ajouter la rotation des planètes sur elles-mêmes avec l'inclinaison
+de leur axe (23,4° pour la Terre), et les anneaux de Saturne (texture Solar System Scope).
+
+**Choix de l'IA : orienter les axes avec le modèle de l'UAI.** Incliner
+chaque planète de son obliquité aurait donné le bon angle, mais pas la bonne
+**direction** de l'axe dans l'espace : les saisons auraient été fausses. L'IA a
+utilisé la direction du pôle (α0, δ0) et l'angle de rotation W publiés par le groupe
+de travail de l'UAI (Archinal et al., rapport 2009), en fonctions pures dans
+`src/physics/rotation.js`. L'inclinaison de l'axe n'est pas saisie : elle est
+**calculée** (angle entre le pôle UAI et la normale à l'orbite de Standish).
+
+**Vérification (24 tests, `tests/rotation.test.js`)** contre une source
+indépendante, le NASA Fact Sheet :
+- inclinaisons des 8 planètes à 0,05° près (dont Vénus 177,4° et Uranus 97,8°,
+  qui tournent « à l'envers ») ; périodes de rotation à 0,1 % près ;
+- Terre : Soleil au zénith du tropique du Cancer au solstice de juin 2024, du
+  Capricorne en décembre, de l'équateur à l'équinoxe ; à 12 h UTC, Soleil
+  au-dessus du méridien de Greenwich, à l'équation du temps près.
+
+**Interaction significative n°4 — Choix de version des données par l'IA.**
+L'IA a écarté le rapport UAI 2015, plus récent, au profit de celui de 2009 :
+- pour Mars, la valeur 2015 de α0 n'est juste qu'avec ses termes périodiques
+  (un terme de 0,42° sinon oublié) ;
+- pour Neptune, la vitesse de rotation 2015 donne 15,97 h, contre 16,11 h dans le
+  NASA Fact Sheet (deux mesures différentes de la période, publiées par des
+  équipes différentes).
+Les valeurs ont été écrites par l'IA de mémoire ; ce sont les tests contre le
+NASA Fact Sheet qui les valident. **À vérifier par le groupe** dans la publication
+d'origine avant la soutenance.
+
+**Anneaux :** la texture est une bande allant du bord intérieur au bord extérieur.
+L'IA a mesuré sa transparence pour retrouver les rayons qu'elle couvre
+(69 300 à 140 900 km : le début de l'anneau B, la division de Cassini et le bord de
+l'anneau A tombent aux bons endroits). Les anneaux sont rattachés au repère de
+l'équateur de Saturne : ils suivent automatiquement l'inclinaison de l'axe.
+
+**Fiche d'information :** affiche désormais la période de rotation et
+l'inclinaison de l'axe.
+
+**Non vérifié par l'IA :** le rendu visuel (le panneau navigateur ne permettait
+pas de capture). Vérifié dans la page : chargement sans erreur, texture des anneaux
+chargée, axe de la Terre incliné de 23,44° dans la scène, 20 appels de dessin.
