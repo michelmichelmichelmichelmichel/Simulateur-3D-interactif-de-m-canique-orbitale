@@ -11,6 +11,7 @@ export default [
   { name: 'marsTexture', type: 'texture', path: 'textures/2k_mars.jpg' },
   { name: 'jupiterTexture', type: 'texture', path: 'textures/2k_jupiter.jpg' },
   { name: 'saturnTexture', type: 'texture', path: 'textures/2k_saturn.jpg' },
+  { name: 'saturnRingTexture', type: 'texture', path: 'textures/2k_saturn_ring_alpha.png' },
   { name: 'uranusTexture', type: 'texture', path: 'textures/2k_uranus.jpg' },
   { name: 'neptuneTexture', type: 'texture', path: 'textures/2k_neptune.jpg' },
 ]

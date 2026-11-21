@@ -25,7 +25,7 @@ export default class Planet {
     this.radius = planetRadius(data.radiusKm)
 
     // Groupe positionné sur l'orbite et orienté selon l'axe de la planète (axe y local = pôle nord) ;
-    // la sphère y tourne sur elle-même.
+    // la sphère y tourne sur elle-même, les anneaux restent dans le plan équatorial.
     this.group = new THREE.Group()
     this.position = this.group.position
     this.scene.add(this.group)
@@ -43,6 +43,8 @@ export default class Planet {
     this.mesh.userData.body = this
     this.group.add(this.mesh)
 
+    if (data.rings) this.createRings(data)
+
     const orbitGeometry = new THREE.BufferGeometry()
     orbitGeometry.setAttribute(
       'position',
@@ -56,6 +58,40 @@ export default class Planet {
 
     this.updateOrbit(jd)
     this.update(jd)
+  }
+
+  /**
+   * Anneaux dans le plan équatorial. La texture est une bande : sa largeur va du bord
+   * intérieur au bord extérieur, on remplace donc les coordonnées UV planes de
+   * RingGeometry par u = (r − rintérieur) / (rextérieur − rintérieur).
+   */
+  createRings({ rings }) {
+    const kmToScene = this.radius / rings.equatorialRadiusKm
+    const inner = rings.innerKm * kmToScene
+    const outer = rings.outerKm * kmToScene
+    const geometry = new THREE.RingGeometry(inner, outer, 128, 1)
+    const position = geometry.attributes.position
+    const uv = geometry.attributes.uv
+    for (let i = 0; i < position.count; i++) {
+      const r = Math.hypot(position.getX(i), position.getY(i))
+      uv.setXY(i, (r - inner) / (outer - inner), 0.5)
+    }
+
+    const texture = this.experience.resources.items[rings.texture]
+    this.rings = new THREE.Mesh(
+      geometry,
+      new THREE.MeshStandardMaterial({
+        ...(texture ? { map: texture } : { color: '#c8b89a', opacity: 0.6 }),
+        transparent: true,
+        side: THREE.DoubleSide,
+        roughness: 1,
+        metalness: 0,
+        depthWrite: false,
+      }),
+    )
+    // RingGeometry est dans le plan xy : on la couche dans le plan xz (équateur, perpendiculaire au pôle y)
+    this.rings.rotation.x = -Math.PI / 2
+    this.group.add(this.rings)
   }
 
   toScene(position) {
@@ -112,6 +148,10 @@ export default class Planet {
   destroy() {
     this.mesh.geometry.dispose()
     this.mesh.material.dispose()
+    if (this.rings) {
+      this.rings.geometry.dispose()
+      this.rings.material.dispose()
+    }
     this.orbit.geometry.dispose()
     this.orbit.material.dispose()
   }
