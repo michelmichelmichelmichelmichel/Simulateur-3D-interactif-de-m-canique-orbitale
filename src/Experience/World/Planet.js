@@ -15,9 +15,15 @@ export default class Planet {
     this.label = data.label
     this.radius = planetRadius(data.radiusKm)
 
+    const texture = this.experience.resources.items[data.texture]
     this.mesh = new THREE.Mesh(
       new THREE.SphereGeometry(this.radius, 48, 24),
-      new THREE.MeshStandardMaterial({ color: data.color, roughness: 1, metalness: 0 }),
+      new THREE.MeshStandardMaterial({
+        // Avec une texture, la couleur doit rester blanche pour ne pas la teinter
+        ...(texture ? { map: texture } : { color: data.color }),
+        roughness: 1,
+        metalness: 0,
+      }),
     )
     this.mesh.userData.body = this
     this.scene.add(this.mesh)

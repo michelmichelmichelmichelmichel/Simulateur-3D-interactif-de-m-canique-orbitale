@@ -11,7 +11,12 @@ export default class Sun {
 
     this.mesh = new THREE.Mesh(
       new THREE.SphereGeometry(SUN_RADIUS, 64, 32),
-      new THREE.MeshBasicMaterial({ color: '#ffcc33' }),
+      // MeshBasicMaterial : le Soleil émet sa propre lumière, il n'est pas éclairé
+      new THREE.MeshBasicMaterial(
+        this.experience.resources.items.sunTexture
+          ? { map: this.experience.resources.items.sunTexture }
+          : { color: '#ffcc33' },
+      ),
     )
     this.mesh.userData.body = this
     this.scene.add(this.mesh)

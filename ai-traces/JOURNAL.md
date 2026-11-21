@@ -76,5 +76,20 @@ JPL Horizons, 8 planètes, contrôle du temps, clic et suivi d'une planète).
 **Évaluation :** voir `docs/evaluation.md`. Écart maximal avec JPL Horizons :
 moins de 1′ pour les planètes telluriques, 10′ pour Saturne.
 
-**Non vérifié :** l'aspect visuel (le panneau navigateur de Claude Code
+**Non vérifié par l'IA :** l'aspect visuel (le panneau navigateur de Claude Code
 était masqué, aucune capture n'a pu être faite) et les performances (FPS).
+
+**Vérification humaine :** j'ai lancé `npm run dev` et contrôlé que les planètes
+sont visibles et éclairées côté Soleil, que les orbites passent par les
+planètes et que le clic sur Mercure est facile. Les trois points sont validés.
+L'échelle des distances en racine carrée est acceptée.
+
+### Textures
+- Accord donné pour les textures Solar System Scope (CC BY 4.0).
+- L'IA a téléchargé 9 textures 2k (4,2 Mo), vérifié qu'il s'agit bien d'images
+  JPEG 2048 × 1024, ajouté un chargeur de ressources (`Utils/Resources.js`,
+  structure de la leçon « Code structuring ») et les crédits dans le README.
+- Choix de l'IA : pour Vénus, la texture de l'atmosphère (ce qu'on voit
+  réellement) plutôt que celle de la surface.
+- Si une texture manque, la planète garde sa couleur unie au lieu de bloquer
+  l'application.

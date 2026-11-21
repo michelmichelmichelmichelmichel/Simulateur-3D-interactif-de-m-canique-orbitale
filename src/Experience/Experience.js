@@ -3,6 +3,8 @@ import Sizes from './Utils/Sizes.js'
 import Time from './Utils/Time.js'
 import Debug from './Utils/Debug.js'
 import SimulationClock from './Utils/SimulationClock.js'
+import Resources from './Utils/Resources.js'
+import sources from './sources.js'
 import Camera from './Camera.js'
 import Renderer from './Renderer.js'
 import World from './World/World.js'
@@ -31,6 +33,7 @@ export default class Experience {
     this.time = new Time()
     this.clock = new SimulationClock()
     this.scene = new THREE.Scene()
+    this.resources = new Resources(sources)
     this.camera = new Camera()
     this.renderer = new Renderer()
     this.world = new World()

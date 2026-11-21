@@ -41,6 +41,19 @@ Ajouter `#debug` à l'URL pour afficher le panneau de réglages (lil-gui).
 | `report/` | Rapport final (PDF) |
 | `CLAUDE.md` | Contexte fourni à l'IA (versionné) |
 
+## Sources et crédits
+
+- **Éléments orbitaux** : E. M. Standish, *Keplerian Elements for Approximate
+  Positions of the Major Planets*, JPL —
+  https://ssd.jpl.nasa.gov/planets/approx_pos.html
+- **Positions de référence** : JPL Horizons — https://ssd.jpl.nasa.gov/horizons/
+- **Rayons des planètes** : NASA Planetary Fact Sheet —
+  https://nssdc.gsfc.nasa.gov/planetary/factsheet/
+- **Textures** (`public/textures/`) : [Solar System Scope](https://www.solarsystemscope.com/textures/),
+  sous licence [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), non modifiées.
+- **Architecture du code** : inspirée de la leçon « Code structuring for bigger
+  projects » du cours Three.js Journey (Bruno Simon).
+
 ## Traces des interactions avec l'IA
 
 Voir [`ai-traces/README.md`](ai-traces/README.md).
