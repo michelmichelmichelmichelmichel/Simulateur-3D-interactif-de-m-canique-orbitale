@@ -1,27 +1,37 @@
 import * as THREE from 'three'
 import Experience from '../Experience.js'
+import Sun from './Sun.js'
+import Planet from './Planet.js'
+import Stars from './Stars.js'
+import { PLANET_NAMES } from '../../physics/elements.js'
+import { PLANET_DATA } from '../../data/planets.js'
 
-/**
- * Contenu de la scène.
- * Étape 0 : un simple Soleil provisoire pour vérifier que la chaîne de rendu fonctionne.
- * Les planètes et le calcul orbital arrivent avec la démo (étape 1).
- */
 export default class World {
   constructor() {
     this.experience = new Experience()
     this.scene = this.experience.scene
+    this.clock = this.experience.clock
 
-    this.sun = new THREE.Mesh(
-      new THREE.SphereGeometry(5, 64, 32),
-      new THREE.MeshBasicMaterial({ color: '#ffcc33' }),
-    )
-    this.scene.add(this.sun)
+    // Faible lumière ambiante pour deviner la face nocturne des planètes
+    this.ambient = new THREE.AmbientLight('#ffffff', 0.08)
+    this.scene.add(this.ambient)
+
+    this.sun = new Sun()
+    this.planets = PLANET_NAMES.map((key) => new Planet(key, PLANET_DATA[key], this.clock.jd))
+    this.stars = new Stars()
   }
 
-  update() {}
+  /** Corps célestes sélectionnables par clic. */
+  get bodies() {
+    return [this.sun, ...this.planets]
+  }
+
+  update() {
+    for (const planet of this.planets) planet.update(this.clock.jd)
+  }
 
   destroy() {
-    this.sun.geometry.dispose()
-    this.sun.material.dispose()
+    this.bodies.forEach((body) => body.destroy())
+    this.stars.destroy()
   }
 }
