@@ -6,6 +6,8 @@ import SimulationClock from './Utils/SimulationClock.js'
 import Camera from './Camera.js'
 import Renderer from './Renderer.js'
 import World from './World/World.js'
+import TimeControls from './TimeControls.js'
+import Hud from './Hud.js'
 
 let instance = null
 
@@ -31,6 +33,8 @@ export default class Experience {
     this.camera = new Camera()
     this.renderer = new Renderer()
     this.world = new World()
+    this.timeControls = new TimeControls()
+    this.hud = new Hud()
 
     this.sizes.on('resize', () => this.resize())
     this.time.on('tick', () => this.update())
@@ -45,6 +49,7 @@ export default class Experience {
     this.clock.update(this.time.delta)
     this.camera.update()
     this.world.update()
+    this.hud.update()
     this.renderer.update()
   }
 
@@ -55,6 +60,7 @@ export default class Experience {
     this.camera.destroy()
     this.renderer.destroy()
     this.debug.destroy()
+    this.timeControls.destroy()
     instance = null
   }
 }
