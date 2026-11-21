@@ -44,3 +44,37 @@ Three.js, et le fait que je suis le cours Three.js Journey (arrêté à la leço
 ### Résultat
 Structure du projet créée : Vite, Three.js, lil-gui, Vitest, ESLint,
 architecture `Experience`, premier test, `CLAUDE.md`, README, dossier des traces.
+
+### Suite de la session — Démo de faisabilité
+**Demande :** réaliser la démo prévue à l'étape 1 (calcul képlérien testé contre
+JPL Horizons, 8 planètes, contrôle du temps, clic et suivi d'une planète).
+
+**Ce que l'IA a produit**
+- `src/physics/` : éléments orbitaux de Standish (JPL) et calcul des positions
+  (équation de Kepler résolue par la méthode de Newton).
+- Un script qui interroge l'API JPL Horizons et enregistre les positions de
+  référence ; 105 tests Vitest.
+- La scène : Soleil, planètes (couleurs provisoires), orbites, étoiles,
+  panneau « Temps », date, sélection au clic avec suivi de la caméra.
+
+**Interaction significative n°2 — Erreurs de l'IA détectées par les tests**
+- Dans un test, l'IA avait écrit à la main l'aphélie de Mercure arrondi
+  (0,4667 AU) au lieu de le calculer ; la valeur exacte est 0,466700788 AU,
+  et le test échouait. Correction : calculer a(1 ± e) à partir des éléments.
+- Un autre test comparait `{z: -0}` et `{z: 0}` ; JavaScript les distingue
+  avec `toEqual`. Correction : vérifier la distance à l'origine.
+- Enseignement : le code de calcul était juste, mais les tests écrits par
+  l'IA contenaient des erreurs. Les tests doivent eux-mêmes être relus.
+
+**Décisions de conception proposées par l'IA (à valider par le groupe)**
+- Échelle des distances en racine carrée : elle conserve la direction des
+  planètes vues du Soleil (la grandeur vérifiée) mais déforme un peu les
+  ellipses. Les tailles des planètes ne sont pas à l'échelle.
+- Utilisation de la table 1 de Standish (1800-2050) ; un avertissement
+  s'affiche hors de cette période.
+
+**Évaluation :** voir `docs/evaluation.md`. Écart maximal avec JPL Horizons :
+moins de 1′ pour les planètes telluriques, 10′ pour Saturne.
+
+**Non vérifié :** l'aspect visuel (le panneau navigateur de Claude Code
+était masqué, aucune capture n'a pu être faite) et les performances (FPS).
