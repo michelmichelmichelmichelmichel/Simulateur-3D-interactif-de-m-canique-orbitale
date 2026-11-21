@@ -9,7 +9,7 @@ examen → décision → justification.
 
 **Auteur :** Laporte--Marsan
 **Outil :** Claude Code
-**Trace :** `sessions/2026-11-21_01_cadrage.md`
+**Trace :** `sessions/2026-11-21_01_cadrage-et-demo.md` (lisible) et `.jsonl` (brut)
 
 ### Objectif
 Comprendre les consignes, définir le sujet et le périmètre, initialiser le dépôt.
@@ -35,9 +35,25 @@ Three.js, et le fait que je suis le cours Three.js Journey (arrêté à la leço
   ce qui a été annoncé à l'enseignant, et la conservation de l'énergie se mesure
   facilement.
 - **Décision du groupe :** garder le modèle **képlérien** en JavaScript.
-- **Justification :** _à compléter par le groupe_ (par exemple : maîtrise de
-  JavaScript grâce au cours, périmètre compatible avec 15 jours, exactitude
-  vérifiable directement contre JPL Horizons).
+- **Déroulé de la décision :** l'IA a d'abord proposé un choix entre trois
+  options (N-corps, hybride, képlérien). J'ai demandé quelle était la
+  différence ; l'IA l'a expliquée (orbites imposées par une formule ou
+  calculées pas à pas à partir des forces) et a recommandé le N-corps.
+  J'ai choisi de garder le képlérien.
+- **Justification (raisons du groupe, choisies parmi celles proposées par l'IA) :**
+  1. *Objectif de départ* : notre idée était un visualiseur du système solaire
+     **réel**, qui montre où sont les planètes à une date donnée. Le modèle
+     képlérien, avec les éléments orbitaux publiés par le JPL, répond
+     directement à cette question.
+  2. *Maîtrise du langage* : je connais JavaScript grâce au cours Three.js
+     Journey ; TypeScript et l'écriture d'intégrateurs numériques auraient
+     ajouté des apprentissages supplémentaires.
+- **Arguments de l'IA non retenus comme raisons :** la vérification directe
+  contre JPL Horizons et le délai de 15 jours. La vérification contre JPL a
+  néanmoins été mise en place par la suite (voir `docs/evaluation.md`).
+- **Ce que l'on perd :** pas d'interaction gravitationnelle entre les corps, donc
+  pas de « manipulation de systèmes planétaires » comme annoncé à
+  l'inscription ; perturbations entre planètes négligées.
 - **Conséquence :** signaler le changement à l'enseignant ; le README garde
   le texte d'inscription d'origine et une note sur l'évolution du sujet.
 
