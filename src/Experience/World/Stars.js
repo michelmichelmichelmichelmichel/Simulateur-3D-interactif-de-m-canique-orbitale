@@ -12,7 +12,8 @@ export default class Stars {
       // Direction uniforme sur la sphère (inversion de la loi de cos θ)
       const theta = 2 * Math.PI * Math.random()
       const phi = Math.acos(2 * Math.random() - 1)
-      const r = 600 + Math.random() * 300
+      // Au-delà de la caméra la plus reculée (échelle réelle) pour rester en arrière-plan
+      const r = 1800 + Math.random() * 600
       positions[i * 3] = r * Math.sin(phi) * Math.cos(theta)
       positions[i * 3 + 1] = r * Math.cos(phi)
       positions[i * 3 + 2] = r * Math.sin(phi) * Math.sin(theta)

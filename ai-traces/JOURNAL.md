@@ -93,3 +93,20 @@ L'échelle des distances en racine carrée est acceptée.
   réellement) plutôt que celle de la surface.
 - Si une texture manque, la planète garde sa couleur unie au lieu de bloquer
   l'application.
+
+### Interaction significative n°3 — Choix de l'échelle : de l'option unique aux presets
+- **Question posée à l'IA :** quelles autres échelles que la racine carrée ?
+- **Proposition de l'IA :** un tableau comparant 5 options (racine carrée,
+  réelle, logarithmique, rails réguliers, exposant réglable), avec avantages
+  et inconvénients. Elle recommandait le curseur d'exposant seul.
+- **Décision du groupe :** proposer **tous les modes sous forme de presets**
+  sélectionnables, ce qui va plus loin que la recommandation de l'IA.
+- **Justification :** l'utilisateur peut comparer les compromis entre
+  lisibilité et réalisme ; utile aussi en soutenance pour montrer pourquoi
+  une compression est nécessaire.
+- **Mise en œuvre (IA) :** `SCALE_MODES` dans `World/scale.js` ; tous les modes
+  conservent la direction des planètes vues du Soleil (vérifié par des tests
+  pour chaque mode) ; le Soleil rétrécit si Mercure s'en approche trop ; la
+  caméra recadre le système à chaque changement. 130 tests au total.
+- **Vérifié par l'IA dans la page :** distances de Mercure et de Neptune, taille du
+  Soleil et recul de la caméra pour chaque mode. Rendu visuel non vu par l'IA.

@@ -9,13 +9,25 @@ export default class Camera {
     this.scene = this.experience.scene
     this.canvas = this.experience.canvas
 
-    this.instance = new THREE.PerspectiveCamera(45, this.sizes.width / this.sizes.height, 0.1, 2000)
+    this.instance = new THREE.PerspectiveCamera(45, this.sizes.width / this.sizes.height, 0.1, 5000)
     this.instance.position.set(0, 70, 120)
     this.scene.add(this.instance)
 
     this.controls = new OrbitControls(this.instance, this.canvas)
     this.controls.enableDamping = true
-    this.controls.maxDistance = 500
+    // En échelle réelle, Neptune est à ~360 unités : il faut pouvoir reculer assez
+    this.controls.maxDistance = 1200
+  }
+
+  /**
+   * Recadre la vue sur tout le système (rayon en unités de scène),
+   * en gardant l'angle de vue actuel.
+   */
+  frame(radius) {
+    const offset = this.instance.position.clone().sub(this.controls.target)
+    offset.setLength(radius * 2.1)
+    this.controls.target.set(0, 0, 0)
+    this.instance.position.copy(offset)
   }
 
   resize() {

@@ -8,10 +8,16 @@ const ORBIT_SEGMENTS = 256
 const ORBIT_REFRESH_DAYS = 365
 
 export default class Planet {
-  constructor(key, data, jd) {
+  /**
+   * @param {string} key nom de la planète (clé des éléments orbitaux)
+   * @param {number} index rang depuis le Soleil (0 = Mercure), utilisé par certains modes d'échelle
+   */
+  constructor(key, index, data, jd) {
     this.experience = new Experience()
     this.scene = this.experience.scene
+    this.scale = this.experience.scale
     this.key = key
+    this.index = index
     this.label = data.label
     this.radius = planetRadius(data.radiusKm)
 
@@ -43,10 +49,14 @@ export default class Planet {
     this.update(jd)
   }
 
+  toScene(position) {
+    return eclipticToScene(position, this.index, this.scale)
+  }
+
   updateOrbit(jd) {
     const attribute = this.orbit.geometry.attributes.position
     orbitPath(this.key, jd, ORBIT_SEGMENTS).forEach((point, i) => {
-      const p = eclipticToScene(point)
+      const p = this.toScene(point)
       attribute.setXYZ(i, p.x, p.y, p.z)
     })
     attribute.needsUpdate = true
@@ -56,9 +66,15 @@ export default class Planet {
 
   update(jd) {
     this.heliocentric = heliocentricPosition(this.key, jd)
-    const p = eclipticToScene(this.heliocentric)
+    const p = this.toScene(this.heliocentric)
     this.mesh.position.set(p.x, p.y, p.z)
     if (Math.abs(jd - this.orbitJd) > ORBIT_REFRESH_DAYS) this.updateOrbit(jd)
+  }
+
+  /** À appeler quand le mode d'échelle change. */
+  applyScale(jd) {
+    this.updateOrbit(jd)
+    this.update(jd)
   }
 
   /** Lignes affichées dans le panneau d'information. */

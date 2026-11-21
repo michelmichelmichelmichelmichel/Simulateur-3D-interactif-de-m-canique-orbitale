@@ -5,6 +5,10 @@ import Planet from './Planet.js'
 import Stars from './Stars.js'
 import { PLANET_NAMES } from '../../physics/elements.js'
 import { PLANET_DATA } from '../../data/planets.js'
+import { sceneDistance } from './scale.js'
+
+// Aphélie de Neptune (AU) : la plus grande distance à afficher
+const NEPTUNE_APHELION_AU = 30.33
 
 export default class World {
   constructor() {
@@ -23,7 +27,9 @@ export default class World {
       this.scene.add(this.ambient)
 
       this.sun = new Sun()
-      this.planets = PLANET_NAMES.map((key) => new Planet(key, PLANET_DATA[key], this.clock.jd))
+      this.planets = PLANET_NAMES.map(
+        (key, index) => new Planet(key, index, PLANET_DATA[key], this.clock.jd),
+      )
       this.ready = true
     })
   }
@@ -31,6 +37,18 @@ export default class World {
   /** Corps célestes sélectionnables par clic (vide tant que les textures chargent). */
   get bodies() {
     return this.ready ? [this.sun, ...this.planets] : []
+  }
+
+  /** Rayon (unités de scène) de l'orbite la plus éloignée, pour cadrer la caméra. */
+  get systemRadius() {
+    return sceneDistance(NEPTUNE_APHELION_AU, PLANET_NAMES.length - 1, this.experience.scale)
+  }
+
+  /** Recalcule positions, orbites et taille du Soleil après un changement d'échelle. */
+  applyScale() {
+    if (!this.ready) return
+    this.sun.applyScale()
+    for (const planet of this.planets) planet.applyScale(this.clock.jd)
   }
 
   update() {
