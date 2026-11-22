@@ -63,3 +63,27 @@ body {
 .hidden {
   display: none;
 }
+
+/* Couche des noms : laisse passer les clics vers le canvas, sauf sur les noms eux-mêmes */
+.labels {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.label {
+  padding: 0 0 4px;
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 3px #000;
+  white-space: nowrap;
+  cursor: pointer;
+  pointer-events: auto;
+  user-select: none;
+}
+
+.label:hover {
+  color: #fff;
+}

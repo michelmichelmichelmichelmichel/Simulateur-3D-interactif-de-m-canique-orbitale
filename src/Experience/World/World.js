@@ -3,6 +3,7 @@ import Experience from '../Experience.js'
 import Sun from './Sun.js'
 import Planet from './Planet.js'
 import Stars from './Stars.js'
+import Labels from './Labels.js'
 import { PLANET_NAMES } from '../../physics/elements.js'
 import { PLANET_DATA } from '../../data/planets.js'
 import { sceneDistance } from './scale.js'
@@ -30,6 +31,7 @@ export default class World {
       this.planets = PLANET_NAMES.map(
         (key, index) => new Planet(key, index, PLANET_DATA[key], this.clock.jd),
       )
+      this.labels = new Labels([this.sun, ...this.planets])
       this.ready = true
     })
   }
@@ -49,15 +51,18 @@ export default class World {
     if (!this.ready) return
     this.sun.applyScale()
     for (const planet of this.planets) planet.applyScale(this.clock.jd)
+    this.labels.update()
   }
 
   update() {
     if (!this.ready) return
     for (const planet of this.planets) planet.update(this.clock.jd)
+    this.labels.update()
   }
 
   destroy() {
     this.bodies.forEach((body) => body.destroy())
+    this.labels?.destroy()
     this.stars.destroy()
   }
 }

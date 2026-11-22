@@ -6,7 +6,8 @@ import { SCALE_MODES } from './World/scale.js'
 /**
  * Panneau de commandes (lil-gui), toujours visible :
  * - « Temps » : vitesse, sens, pause (barre d'espace), saut à une date ;
- * - « Échelle » : mode d'affichage des distances.
+ * - « Échelle » : mode d'affichage des distances ;
+ * - « Affichage » : noms des corps.
  */
 export default class Controls {
   constructor() {
@@ -17,6 +18,7 @@ export default class Controls {
     this.gui = new GUI({ title: 'Commandes' })
     this.setTimeFolder()
     this.setScaleFolder()
+    this.setDisplayFolder()
 
     this.onKeyDown = (event) => {
       if (event.code !== 'Space' || event.target.tagName === 'INPUT') return
@@ -70,6 +72,16 @@ export default class Controls {
       .name('Exposant p')
       .onChange(() => this.applyScale())
       .show(this.scale.mode === 'power')
+  }
+
+  setDisplayFolder() {
+    const folder = this.gui.addFolder('Affichage')
+    const params = { labels: true }
+    folder
+      .add(params, 'labels')
+      .name('Noms des planètes')
+      // Le monde n'existe qu'une fois les textures chargées
+      .onChange((visible) => this.experience.world.labels?.setVisible(visible))
   }
 
   applyScale() {

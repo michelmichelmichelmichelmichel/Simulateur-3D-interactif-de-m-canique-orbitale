@@ -170,3 +170,25 @@ l'inclinaison de l'axe.
 **Non vérifié par l'IA :** le rendu visuel (le panneau navigateur ne permettait
 pas de capture). Vérifié dans la page : chargement sans erreur, texture des anneaux
 chargée, axe de la Terre incliné de 23,44° dans la scène, 20 appels de dessin.
+
+**Contrôle visuel des anneaux (le panneau navigateur permettait enfin les captures) :**
+la face des anneaux visible depuis le nord est sombre en novembre 2026. Ce n'est
+pas un bug : depuis l'équinoxe de Saturne (mai 2025), le Soleil éclaire leur face
+sud, avec une élévation calculée de −8,5°.
+
+### Extension EF12 — Noms des planètes
+**Demande :** afficher le nom des planètes.
+
+**Choix de l'IA :** des éléments HTML placés par `CSS2DRenderer` (exemple officiel
+Three.js), plutôt qu'un texte en 3D : le texte reste net à toute distance et ne
+coûte aucun appel de dessin. La leçon « Mixing HTML and WebGL » de Three.js Journey
+fait le même calcul à la main. Ajouts proposés par l'IA : un clic sur le nom
+sélectionne le corps, et une case « Noms des planètes » dans un nouveau dossier
+« Affichage » permet de les masquer.
+
+**Correction après contrôle visuel par l'IA :** le nom était d'abord décalé vers le
+haut de la scène ; vu de dessus, il passait sur la planète. Il est maintenant
+décalé vers le haut de l'écran.
+
+**Limite constatée :** en vue d'ensemble, les noms du Soleil et des planètes
+intérieures se chevauchent.

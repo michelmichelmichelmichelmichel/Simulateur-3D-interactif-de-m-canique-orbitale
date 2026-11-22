@@ -28,9 +28,9 @@ dates hors de 1800–2050 (affichées, mais sans garantie de précision).
 | EF7 | Planètes texturées | Indispensable | 9 textures chargées ; couleur unie si une texture manque | Contrôle dans le navigateur | Fait |
 | EF8 | Avertir quand la date sort de 1800–2050 | Indispensable | Message affiché hors de l'intervalle | `tests/SimulationClock.test.js` | Fait |
 | EF9 | Rotation des planètes sur elles-mêmes et inclinaison de leur axe | Extension | Périodes (à 0,1 %) et inclinaisons (à 0,05°) conformes au NASA Fact Sheet ; position du Soleil au zénith correcte aux solstices et équinoxe | `tests/rotation.test.js` | Fait |
-| EF10 | Anneaux de Saturne | Extension | Anneaux dans le plan équatorial de Saturne | Construction (enfants du repère équatorial) + contrôle visuel | Fait (contrôle visuel à confirmer) |
+| EF10 | Anneaux de Saturne | Extension | Anneaux dans le plan équatorial de Saturne | Construction (enfants du repère équatorial) + contrôle visuel | Fait |
 | EF11 | Terre jour/nuit avec atmosphère | Extension | La face éclairée est tournée vers le Soleil | Contrôle visuel | À faire |
-| EF12 | Noms des planètes affichés dans la scène | Extension | Chaque planète a une étiquette lisible | Contrôle visuel | À faire |
+| EF12 | Noms des planètes affichés dans la scène | Extension | Chaque corps a un nom lisible au-dessus de lui, qu'on peut masquer ; un clic sur le nom sélectionne le corps | Contrôle dans le navigateur | Fait |
 
 ## 3. Exigences non fonctionnelles
 
@@ -61,6 +61,8 @@ pour la table 1800–2050. Nous les avons repris tels quels.
   repéré (Greenwich au centre) ; pour les autres, la face visible à une date
   donnée n'est pas garantie. Aux vitesses élevées (1 mois/s, 1 an/s), la rotation
   est trop rapide pour l'affichage et paraît saccadée (effet stroboscopique).
+- Noms des planètes : en vue d'ensemble, ceux du Soleil, de Mercure, de Vénus et
+  de la Terre se chevauchent (planètes proches à l'écran).
 - Les anneaux de Saturne ne projettent pas d'ombre et n'en reçoivent pas.
 - La conversion des dates ignore l'écart entre UTC et le temps dynamique
   (environ une minute).
