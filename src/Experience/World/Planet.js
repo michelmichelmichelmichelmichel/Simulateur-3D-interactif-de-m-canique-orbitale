@@ -19,6 +19,7 @@ export default class Planet {
     this.experience = new Experience()
     this.scene = this.experience.scene
     this.scale = this.experience.scale
+    this.display = this.experience.display
     this.key = key
     this.index = index
     this.label = data.label
@@ -119,7 +120,9 @@ export default class Planet {
     const [a, b, c, d, e, f, g, h, i] = eclipticMatrixToScene(poleFrame(this.key, jd))
     poleMatrix.set(a, b, c, 0, d, e, f, 0, g, h, i, 0, 0, 0, 0, 1)
     this.group.quaternion.setFromRotationMatrix(poleMatrix)
-    this.mesh.rotation.y = rotationAngles(this.key, jd).W % (2 * Math.PI)
+    // Option « Rotation des planètes » désactivée : la planète garde sa dernière orientation
+    // (l'axe reste incliné). Réactivée, elle reprend l'angle réel de la date simulée.
+    if (this.display.rotation) this.mesh.rotation.y = rotationAngles(this.key, jd).W % (2 * Math.PI)
 
     if (Math.abs(jd - this.orbitJd) > ORBIT_REFRESH_DAYS) this.updateOrbit(jd)
   }

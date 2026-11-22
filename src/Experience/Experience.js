@@ -35,6 +35,8 @@ export default class Experience {
     this.clock = new SimulationClock()
     // Réglages d'échelle partagés (modifiés par le panneau « Commandes »)
     this.scale = { ...DEFAULT_SCALE }
+    // Options d'affichage partagées (panneau « Affichage ») ; activées par défaut
+    this.display = { labels: true, rotation: true }
     this.scene = new THREE.Scene()
     this.resources = new Resources(sources)
     this.camera = new Camera()

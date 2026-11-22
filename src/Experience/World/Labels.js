@@ -18,7 +18,6 @@ export default class Labels {
     this.scene = this.experience.scene
     this.camera = this.experience.camera
     this.screenUp = new THREE.Vector3()
-    this.visible = true
 
     this.items = bodies.map((body) => {
       const element = document.createElement('div')
@@ -32,11 +31,11 @@ export default class Labels {
       this.scene.add(object)
       return { body, object }
     })
+    this.setVisible(this.experience.display.labels)
     this.update()
   }
 
   setVisible(visible) {
-    this.visible = visible
     for (const { object } of this.items) object.visible = visible
   }
 

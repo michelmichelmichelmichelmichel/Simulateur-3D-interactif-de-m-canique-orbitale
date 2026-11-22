@@ -7,7 +7,7 @@ import { SCALE_MODES } from './World/scale.js'
  * Panneau de commandes (lil-gui), toujours visible :
  * - « Temps » : vitesse, sens, pause (barre d'espace), saut à une date ;
  * - « Échelle » : mode d'affichage des distances ;
- * - « Affichage » : noms des corps.
+ * - « Affichage » : noms des corps, rotation des planètes sur elles-mêmes.
  */
 export default class Controls {
   constructor() {
@@ -76,12 +76,14 @@ export default class Controls {
 
   setDisplayFolder() {
     const folder = this.gui.addFolder('Affichage')
-    const params = { labels: true }
+    const display = this.experience.display
     folder
-      .add(params, 'labels')
+      .add(display, 'labels')
       .name('Noms des planètes')
       // Le monde n'existe qu'une fois les textures chargées
       .onChange((visible) => this.experience.world.labels?.setVisible(visible))
+    // Lue à chaque image par Planet.update
+    folder.add(display, 'rotation').name('Rotation des planètes')
   }
 
   applyScale() {

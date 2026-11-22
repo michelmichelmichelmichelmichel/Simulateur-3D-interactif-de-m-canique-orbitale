@@ -27,7 +27,7 @@ dates hors de 1800–2050 (affichées, mais sans garantie de précision).
 | EF6 | Choisir l'échelle des distances parmi plusieurs modes | Indispensable | 5 modes disponibles ; chacun conserve la direction des planètes | `tests/scale.test.js` | Fait |
 | EF7 | Planètes texturées | Indispensable | 9 textures chargées ; couleur unie si une texture manque | Contrôle dans le navigateur | Fait |
 | EF8 | Avertir quand la date sort de 1800–2050 | Indispensable | Message affiché hors de l'intervalle | `tests/SimulationClock.test.js` | Fait |
-| EF9 | Rotation des planètes sur elles-mêmes et inclinaison de leur axe | Extension | Périodes (à 0,1 %) et inclinaisons (à 0,05°) conformes au NASA Fact Sheet ; position du Soleil au zénith correcte aux solstices et équinoxe | `tests/rotation.test.js` | Fait |
+| EF9 | Rotation des planètes sur elles-mêmes et inclinaison de leur axe | Extension | Périodes (à 0,1 %) et inclinaisons (à 0,05°) conformes au NASA Fact Sheet ; position du Soleil au zénith correcte aux solstices et équinoxe ; rotation désactivable (activée par défaut) | `tests/rotation.test.js` | Fait |
 | EF10 | Anneaux de Saturne | Extension | Anneaux dans le plan équatorial de Saturne | Construction (enfants du repère équatorial) + contrôle visuel | Fait |
 | EF11 | Terre jour/nuit avec atmosphère | Extension | La face éclairée est tournée vers le Soleil | Contrôle visuel | À faire |
 | EF12 | Noms des planètes affichés dans la scène | Extension | Chaque corps a un nom lisible au-dessus de lui, qu'on peut masquer ; un clic sur le nom sélectionne le corps | Contrôle dans le navigateur | Fait |

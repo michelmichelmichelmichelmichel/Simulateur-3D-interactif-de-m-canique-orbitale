@@ -192,3 +192,18 @@ décalé vers le haut de l'écran.
 
 **Limite constatée :** en vue d'ensemble, les noms du Soleil et des planètes
 intérieures se chevauchent.
+
+### Option « Rotation des planètes »
+**Demande :** pouvoir activer ou désactiver la rotation des planètes (activée par défaut).
+
+**Mise en œuvre (IA) :** case dans le dossier « Affichage ». Désactivée, chaque
+planète garde sa dernière orientation, avec l'axe toujours incliné. Réactivée, elle
+reprend l'angle réel de la date simulée ; elle ne repart pas de là où elle s'était
+arrêtée. Les options d'affichage sont regroupées dans `experience.display`, comme
+l'échelle dans `experience.scale`. La case « Noms des planètes » est aussi
+respectée si on la change pendant le chargement des textures.
+
+**Vérifié par l'IA dans la page :** rotation figée quand la case est décochée.
+Rotation de 90° de la Terre pour un quart de jour quand elle est cochée.
+Premier contrôle faussement négatif : l'animation était suspendue dans le panneau
+navigateur, l'horloge n'avançait donc pas.
